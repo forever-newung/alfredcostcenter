@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.forever-newung.alfredcostcenter</string>
+	<key>connections</key>
+	<dict>
+		<key>15299C7A-CDEA-4359-8898-446F2892DB7C</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>FF316160-82F1-4AC1-8D82-72A1F0AC9ED6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>D891733B-3E19-4764-BF22-C84498D28339</string>
+				<key>modifiers</key>
+				<integer>524288</integer>
+				<key>modifiersubtext</key>
+				<string>Clipboard to Cost Center &amp; insta-paste</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>D891733B-3E19-4764-BF22-C84498D28339</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>51E25584-848F-4F8A-940C-FDD0C7048664</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>FF316160-82F1-4AC1-8D82-72A1F0AC9ED6</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A70A4E1E-712E-4575-967A-0AA64960904D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>EB087382-CAFD-4A53-986E-6DBF2924A472</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>testuser</string>
+	<key>description</key>
+	<string>get samaccount's cost center</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>costcenter</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string></string>
+				<key>title</key>
+				<string>Cost Center {query} copied to clipboard</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>A70A4E1E-712E-4575-967A-0AA64960904D</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query="{query}"
+
+if [[ "$query" == *"@"* ]]; then
+  query=$(echo "$query" | awk 'BEGIN { FS = "@" } ; {print $1}')
+fi
+
+
+dscl /Active\ Directory/${ADdomain}/All\ Domains/ -read /Users/$query msExchExtensionAttribute16 | awk '{print $NF}'</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>FF316160-82F1-4AC1-8D82-72A1F0AC9ED6</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>EB087382-CAFD-4A53-986E-6DBF2924A472</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>cc</string>
+				<key>subtext</key>
+				<string>need to be on VPN!</string>
+				<key>text</key>
+				<string>costcenter from samaccount/email</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>15299C7A-CDEA-4359-8898-446F2892DB7C</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query="$(pbpaste)"
+
+if [[ "$query" == *"@"* ]]; then
+  query=$(echo "$query" | awk 'BEGIN { FS = "@" } ; {print $1}')
+fi
+
+
+dscl /Active\ Directory/${ADdomain}/All\ Domains/ -read /Users/$query msExchExtensionAttribute16 | awk '{print $NF}'</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>D891733B-3E19-4764-BF22-C84498D28339</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<true/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>51E25584-848F-4F8A-940C-FDD0C7048664</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>get cost center of user from Active Directory
+
+Hold option for instant costcenter from clipboard contents!
+
+~~~~~
+
+To Configure, set the Workflow Environment Variable "ADdomain" to your AD domain name. 
+You can find the AD Domain by running 'dscl' on the command line, and then 'cd Active\ Directory' then 'ls'
+
+~~~~
+
+Note: this will only be useful if your organzitaion stores costcenter information in msExchExtensionAttribute16. If you do not, then you'll have to modify the two bash script components of this workflow.</string>
+	<key>uidata</key>
+	<dict>
+		<key>15299C7A-CDEA-4359-8898-446F2892DB7C</key>
+		<dict>
+			<key>xpos</key>
+			<integer>55</integer>
+			<key>ypos</key>
+			<integer>200</integer>
+		</dict>
+		<key>51E25584-848F-4F8A-940C-FDD0C7048664</key>
+		<dict>
+			<key>xpos</key>
+			<integer>490</integer>
+			<key>ypos</key>
+			<integer>355</integer>
+		</dict>
+		<key>A70A4E1E-712E-4575-967A-0AA64960904D</key>
+		<dict>
+			<key>xpos</key>
+			<integer>490</integer>
+			<key>ypos</key>
+			<integer>10</integer>
+		</dict>
+		<key>D891733B-3E19-4764-BF22-C84498D28339</key>
+		<dict>
+			<key>xpos</key>
+			<integer>255</integer>
+			<key>ypos</key>
+			<integer>355</integer>
+		</dict>
+		<key>EB087382-CAFD-4A53-986E-6DBF2924A472</key>
+		<dict>
+			<key>xpos</key>
+			<integer>490</integer>
+			<key>ypos</key>
+			<integer>130</integer>
+		</dict>
+		<key>FF316160-82F1-4AC1-8D82-72A1F0AC9ED6</key>
+		<dict>
+			<key>xpos</key>
+			<integer>255</integer>
+			<key>ypos</key>
+			<integer>75</integer>
+		</dict>
+	</dict>
+	<key>variables</key>
+	<dict>
+		<key>ADdomain</key>
+		<string></string>
+	</dict>
+	<key>variablesdontexport</key>
+	<array>
+		<string>ADdomain</string>
+	</array>
+	<key>version</key>
+	<string>0.0.0.1.0</string>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
